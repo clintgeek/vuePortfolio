@@ -1,0 +1,11 @@
+version: '2'
+services:
+    portfolio-home:
+        container_name: Portfolio-Home
+        image: httpd:2.4
+        restart: unless-stopped
+        ports:
+          - 8829:80
+        volumes:
+          - /mnt/data500/docker/portfolioHome/www:/usr/local/apache2/htdocs/
+

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Clintgeek's Vue.js Porfolio</title>
+  <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+  <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+  <script src="//unpkg.com/vue@latest/dist/vue.min.js"></script>
+  <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159664673-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-159664673-2');
+  </script>
+</head>
+<body>
+  <div id="vm" :class="containerClass">
+    <heading-jumbotron
+      :header='headerInfo.header'
+      :lead='headerInfo.lead'
+      :bg-variant='headerInfo.bgVariant'
+      :text-variant='headerInfo.textVariant'
+    ></heading-jumbotron>
+    <b-card-group deck :class="cardGroupClass">
+      <site-card
+        v-for="site in siteCards"
+        :site="site"
+        :key="site.title"
+      ></site-card>
+    </b-card-group>
+  </div>
+
+  <script>
+    Vue.component('heading-jumbotron', {
+      props: ['lead', 'header', 'bgVariant', 'textVariant'],
+      template: `
+        <div>
+          <b-jumbotron :header=header :lead=lead :bg-variant=bgVariant :text-variant=textVariant>
+            <b-button variant="secondary" href="https://rorportfolio.clintgeek.com">RubyOnRails Version</b-button>
+            <b-button variant="primary" href="mailto:clintgeek+portfolio@gmail.com">Email Me</b-button>
+          </b-jumbotron>
+        </div>
+      `
+    })
+
+    Vue.component('site-card', {
+      props: ['site'],
+      template: `
+        <div>
+          <a v-b-modal="'modal-' + site.title">
+            <b-card
+              :title=site.title
+              :img-src=site.imgUrlSm 
+              img-alt="Image"
+              img-top
+              tag="article"
+              style="max-width: 20rem;"
+              class="mb-2"
+            >
+              <b-card-text>
+                {{ site.desc }} 
+              </b-card-text>
+
+              <b-button :href=site.url variant="primary">{{ site.buttonText }}</b-button>
+            </b-card>
+          </a>
+          <b-modal :id="'modal-' + site.title" :title=site.buttonText size="lg" ok-only ok-title="Close">
+            <b-img :src=site.imgUrlLg fluid alt="image"></b-img>
+          </b-modal>
+        </div>
+      `
+    })
+
+    var headerInfo = {
+      header: "Clintgeek's Portfolio",
+      lead: 'Hammered Together in Vue.js and Bootstrap',
+      bgVariant: 'info',
+      textVariant: 'white',
+    };
+
+    var siteCards = [
+      { 
+        title: "blog",
+        desc: 'a blog by clintgeek using Ghost and Google Analytics',
+        buttonText: 'blog.clintgeek.com',
+        url: 'https://blog.clintgeek.com',
+        imgUrlSm: 'images/blog_sm.png',
+        imgUrlLg: 'images/blog_lg.png',
+      },
+      { 
+        title: "start page",
+        desc: 'a custom start page using bootstrap, jQuery, APIs, and HTML',
+        buttonText: 'start.clintgeek.com',
+        url: 'https://start.clintgeek.com',
+        imgUrlSm: 'images/start_sm.png',
+        imgUrlLg: 'images/start_lg.png',
+      },
+      { 
+        title: "Ruby On Rails Demo Blog",
+        desc: 'the rails guide we all know and love, now with more bootstrap!',
+        buttonText: 'rorblog.clintgeek.com',
+        url: 'https://rorblog.clintgeek.com',
+        imgUrlSm: 'images/rorBlog_sm.png',
+        imgUrlLg: 'images/rorBlog_lg.png',
+      },
+      { 
+        title: "Ruby On Rails Portfolio",
+        desc: "it's kinda like this page, but built with Ruby on Rails",
+        buttonText: 'rorportfolio.clintgeek.com',
+        url: 'https://rorportfolio.clintgeek.com',
+        imgUrlSm: 'images/rorPortfolio_sm.png',
+        imgUrlLg: 'images/rorPortfolio_lg.png',
+      },
+      { 
+        title: "linkedIn",
+        desc: 'you know, LinkedIn, but specifically my profile on it',
+        buttonText: 'linkedin.com/in/clintcrocker',
+        url: 'https://www.linkedin.com/in/clintcrocker/',
+        imgUrlSm: 'images/linkedIn_sm.png',
+        imgUrlLg: 'images/linkedIn_lg.png',
+      },
+      { 
+        title: "github",
+        desc: 'home automation, arduino projects, other stuff',
+        buttonText: 'github.com/clintgeek',
+        url: 'https://github.com/clintgeek/',
+        imgUrlSm: 'images/github_sm.png',
+        imgUrlLg: 'images/github_lg.png',
+      },
+    ]
+
+    var vm = new Vue({
+      el: '#vm',
+      data: {
+        containerClass: 'container-fluid',
+        cardGroupClass: 'row justify-content-center',
+        headerInfo,
+        siteCards,
+      }
+    })
+  </script>
+</body>
+</html>
